@@ -1,5 +1,4 @@
-function timer() {
-    const deadline = new Date(2023, 5, 26);
+function timer(id, deadline) {
 
     function getTimeDifference(endDate) {
         const t = Date.parse(endDate) - Date.parse(new Date());
@@ -59,7 +58,7 @@ function timer() {
         }
     }
 
-    setClock('.timer', deadline);
+    setClock(id, deadline);
 }
 
-module.exports = timer;
+export default timer;

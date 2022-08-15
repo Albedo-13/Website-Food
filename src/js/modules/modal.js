@@ -1,48 +1,52 @@
-function modal() {
-    const modal = document.querySelector(".modal"),
-        modalOpenBtns = document.querySelectorAll("[data-modal]"),
-        modalCloseBtns = document.querySelectorAll("[data-close]"),
-        modalTimerId = setTimeout(openModal, 300000);
+function openModal(modalSelector, modalTimerId) {
+    const modal = document.querySelector(modalSelector);
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 
-    function openModal() {
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+    if (modalTimerId) {
         clearInterval(modalTimerId);
     }
+}
 
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
+function closeModal(modalSelector) {
+    const modal = document.querySelector(modalSelector);
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function modal(triggerSelector, modalSelector, modalTimerId) {
+    const modal = document.querySelector(modalSelector),
+          modalOpenBtns = document.querySelectorAll(triggerSelector),
+          modalCloseBtns = document.querySelectorAll("[data-close]");
 
     modalCloseBtns.forEach((btn) => {
-        btn.addEventListener('click', closeModal);
+        btn.addEventListener('click', () => closeModal(modalSelector));
     });
 
     modalOpenBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
-            openModal();
+            openModal(modalSelector, modalTimerId);   // БУДЕТ ЛИ ВЫЗОВ?
             clearInterval(modalTimerId);
         });
     });
 
     modal.addEventListener('click', (e) => {
         if (e.target === modal || e.target.getAttribute('data-close') == '') {
-            closeModal();
+            closeModal(modalSelector);
             clearInterval(modalTimerId);
         }
     });
 
     document.addEventListener('keydown', (e) => {
         if (e.code === "Escape" && modal.style.display === "block") {
-            closeModal();
+            closeModal(modalSelector);
             clearInterval(modalTimerId);
         }
     });
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
-            openModal();
+            openModal(modalSelector, modalTimerId);
             clearInterval(modalTimerId);
             window.removeEventListener('scroll', showModalByScroll);
         }
@@ -51,4 +55,6 @@ function modal() {
     window.addEventListener('scroll', showModalByScroll);
 }
 
-module.exports = modal;
+export default modal;
+export {closeModal};
+export {openModal};
