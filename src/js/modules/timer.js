@@ -1,4 +1,4 @@
-function timer(id, deadline) {
+function timer({ parentSelector, endDate, daySelector, hourSelector, minuteSelector, secondSelector }) {
 
     function getTimeDifference(endDate) {
         const t = Date.parse(endDate) - Date.parse(new Date());
@@ -27,17 +27,24 @@ function timer(id, deadline) {
         };
     }
 
-    function setClock(selector, deadline) {
+    function setClock(selector, endDate) {
         const timer = document.querySelector(selector),
-            days = timer.querySelector('#days'),
-            hours = timer.querySelector('#hours'),
-            minutes = timer.querySelector('#minutes'),
-            seconds = timer.querySelector('#seconds'),
+            days = timer.querySelector(daySelector),
+            hours = timer.querySelector(hourSelector),
+            minutes = timer.querySelector(minuteSelector),
+            seconds = timer.querySelector(secondSelector),
             timeInterval = setInterval(updateClock, 1000);
 
+        if (!timer || !days || !hours || !minutes || !seconds) {
+            timer.innerHTML = `error adding timer:<br/>null reference selector(s)<br/>check http://example.com`;
+            timer.classList.add("error");
+            return;
+        }
+
         updateClock();
+
         function updateClock() {
-            const t = getTimeDifference(deadline);
+            const t = getTimeDifference(endDate);
 
             days.innerHTML = addZeros(t.days);
             hours.innerHTML = addZeros(t.hours);
@@ -52,13 +59,12 @@ function timer(id, deadline) {
         function addZeros(num) {
             if (num >= 0 && num < 10) {
                 return `0${num}`;
-            } else {
-                return num;
             }
+            return num;
         }
     }
 
-    setClock(id, deadline);
+    setClock(parentSelector, endDate);
 }
 
 export default timer;

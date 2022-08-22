@@ -14,7 +14,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     tabs(".tabheader__item", ".tabcontent", ".tabheader__items", "tabheader__item_active");
     modal("[data-modal]", ".modal", modalTimerId);
-    timer(".timer", new Date(2023, 5, 26));
     cards();
     calc();
     forms("form", modalTimerId);
@@ -27,6 +26,15 @@ window.addEventListener('DOMContentLoaded', () => {
         currentCounter: "#current",
         wrapper: ".offer__slider-wrapper",
         field: ".offer__slider-inner"
+    });
+    timer({
+        parentSelector: ".timer",
+        endDate: new Date(2023, 5, 26),
+        daySelector: "#days",
+        hourSelector: "#hours",
+        minuteSelector: "#minutes",
+        secondSelector: "#seconds",
+
     });
 });
 

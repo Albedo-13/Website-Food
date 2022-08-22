@@ -25,7 +25,7 @@ function modal(triggerSelector, modalSelector, modalTimerId) {
 
     modalOpenBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
-            openModal(modalSelector, modalTimerId);   // БУДЕТ ЛИ ВЫЗОВ?
+            openModal(modalSelector, modalTimerId);
             clearInterval(modalTimerId);
         });
     });
