@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
         hourSelector: "#hours",
         minuteSelector: "#minutes",
         secondSelector: "#seconds",
-
     });
+    
 });
 
